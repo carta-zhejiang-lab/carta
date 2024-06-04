@@ -56,6 +56,7 @@ import {
     SnippetStore,
     SpatialProfileStore,
     SpectralProfileStore,
+    SystemType,
     WidgetsStore
 } from "stores";
 import {CompassAnnotationStore, CURSOR_REGION_ID, DistanceMeasuringStore, FrameInfo, FrameStore, PointAnnotationStore, RegionStore, RulerAnnotationStore, TextAnnotationStore} from "stores/Frame";
@@ -757,6 +758,7 @@ export class AppStore {
     @flow.bound
     *openFile(path: string, filename?: string, hdu?: string, imageArithmetic?: boolean, updateStartingDirectory: boolean = true) {
         this.removeAllFrames();
+        this.overlayStore.global.setSystem(SystemType.Auto);
         return yield this.loadFile(path, filename, hdu, imageArithmetic, true, updateStartingDirectory);
     }
 
@@ -840,6 +842,7 @@ export class AppStore {
             const removedFrameIsSpectralReference = frame === this.spectralReference;
             const removedFrameIsRasterScalingReference = frame === this.rasterScalingReference;
             const fileId = frame.frameInfo.fileId;
+            const removedFrameIsLastFrame = this.frames[this.frames.length - 1].frameInfo.fileId === fileId;
 
             // adjust requirements for stores
             this.widgetsStore.removeFrameFromRegionWidgets(fileId);
@@ -913,6 +916,11 @@ export class AppStore {
 
                 if (!this.frames?.length) {
                     this.activeWorkspace = undefined;
+                } else {
+                    // update overlay defaults from the last frame
+                    if (removedFrameIsLastFrame) {
+                        this.overlayStore.setDefaultsFromFrame(this.frames[this.frames.length - 1]);
+                    }
                 }
 
                 // TODO: check this
@@ -1901,13 +1909,6 @@ export class AppStore {
             }
         });
 
-        // Set overlay defaults from current frame
-        autorun(() => {
-            if (this.activeFrame) {
-                this.overlayStore.setDefaultsFromAST(this.activeFrame);
-            }
-        });
-
         // Update image panel page buttons
         autorun(() => {
             if (this.activeFrame && this.numImageColumns && this.numImageRows) {
@@ -2649,10 +2650,6 @@ export class AppStore {
     }
 
     private changeActiveFrame(frame: FrameStore) {
-        if (frame !== this.activeFrame) {
-            // Set overlay defaults from current frame
-            this.overlayStore.setDefaultsFromAST(frame);
-        }
         this.activeFrame = frame;
         if (!frame.isPreview) {
             this.widgetsStore.updateImageWidgetTitle(this.layoutStore.dockedLayout);
