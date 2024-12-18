@@ -7,7 +7,7 @@ import {
     CodeSnippetDialogComponent,
     ContourDialogComponent,
     ExternalPageDialogComponent,
-    FileBrowserDialogComponent,
+    // FileBrowserDialogComponent,
     FileInfoDialogComponent,
     FittingDialogComponent,
     OnlineDataQueryDialogComponent,
@@ -32,7 +32,7 @@ export class UIControllerComponent extends React.Component {
                 <ContourDialogComponent />
                 <VectorOverlayDialogComponent />
                 <FileInfoDialogComponent />
-                <FileBrowserDialogComponent />
+                {/* <FileBrowserDialogComponent /> */}
                 <PreferenceDialogComponent />
                 <SaveLayoutDialogComponent />
                 <WorkspaceDialogComponent />

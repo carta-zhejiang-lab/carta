@@ -236,6 +236,7 @@ export class AppStore {
             const ack = await this.backendService.connect(wsURL);
             console.log(`Connected with session ID ${ack.sessionId}`);
             this.logStore.addInfo(`Connected to server ${wsURL} with session ID ${ack.sessionId}`, ["network"]);
+            await this.openFile(".", "testkeys.fits", "");
         } catch (err) {
             console.error(err);
         }

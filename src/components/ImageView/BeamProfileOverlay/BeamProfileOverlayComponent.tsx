@@ -131,7 +131,6 @@ export class BeamProfileOverlayComponent extends React.Component<BeamProfileOver
         });
 
         const className = classNames("beam-profile-stage", {docked: this.props.docked});
-
         return (
             <Stage className={className} width={baseFrame.renderWidth} height={baseFrame.renderHeight} style={{left: this.props.left, top: this.props.top}}>
                 <Layer listening={false} ref={this.layerRef}>
