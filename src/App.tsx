@@ -4,7 +4,10 @@ import {Alert, Classes, Intent} from "@blueprintjs/core";
 import classNames from "classnames";
 import {observer} from "mobx-react";
 
-import {FloatingWidgetManagerComponent, UIControllerComponent} from "components";
+import {
+    // FloatingWidgetManagerComponent,
+    UIControllerComponent
+} from "components";
 import {TaskProgressDialogComponent} from "components/Dialogs";
 import {ApiService} from "services";
 import {AlertStore, AlertType, AppStore} from "stores";
@@ -97,7 +100,7 @@ export class App extends React.Component {
                     <ReactResizeDetector handleWidth handleHeight onResize={this.onContainerResize} refreshMode={"throttle"} refreshRate={200}></ReactResizeDetector>
                 </div>
                 <HotkeyTargetContainer />
-                <FloatingWidgetManagerComponent />
+                {/* <FloatingWidgetManagerComponent /> */}
             </div>
         );
     }

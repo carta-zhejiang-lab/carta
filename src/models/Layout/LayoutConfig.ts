@@ -14,7 +14,7 @@ const COMPONENT_CONFIG = new Map<string, any>([
         {
             type: "react-component",
             component: "image-view",
-            title: "No image loaded",
+            title: "Image",
             height: smoothStepOffset(window.innerHeight, 720, 1080, 65, 75), // image view fraction: adjust layout properties based on window dimensions
             id: "image-view",
             isClosable: false
@@ -28,123 +28,123 @@ const COMPONENT_CONFIG = new Map<string, any>([
             title: "Render Configuration",
             id: "render-config"
         }
-    ],
-    [
-        "region-list",
-        {
-            type: "react-component",
-            component: "region-list",
-            title: "Region List",
-            id: "region-list"
-        }
-    ],
-    [
-        "animator",
-        {
-            type: "react-component",
-            component: "animator",
-            title: "Animator",
-            id: "animator"
-        }
-    ],
-    [
-        "spatial-profiler",
-        {
-            type: "react-component",
-            component: "spatial-profiler",
-            id: "spatial-profiler"
-        }
-    ],
-    [
-        "spectral-profiler",
-        {
-            type: "react-component",
-            component: "spectral-profiler",
-            id: "spectral-profiler",
-            title: "Z Profile: Cursor"
-        }
-    ],
-    [
-        "stokes",
-        {
-            type: "react-component",
-            component: "stokes",
-            id: "stokes",
-            title: "Stokes Analysis"
-        }
-    ],
-    [
-        "histogram",
-        {
-            type: "react-component",
-            component: "histogram",
-            title: "Histogram",
-            id: "histogram"
-        }
-    ],
-    [
-        "stats",
-        {
-            type: "react-component",
-            component: "stats",
-            title: "Statistics",
-            id: "stats"
-        }
-    ],
-    [
-        "layer-list",
-        {
-            type: "react-component",
-            component: "layer-list",
-            title: "Image List",
-            id: "layer-list"
-        }
-    ],
-    [
-        "log",
-        {
-            type: "react-component",
-            component: "log",
-            title: "Log",
-            id: "log"
-        }
-    ],
-    [
-        "catalog-overlay",
-        {
-            type: "react-component",
-            component: "catalog-overlay",
-            title: "Catalog Overlay",
-            id: "catalog-overlay"
-        }
-    ],
-    [
-        "catalog-plot",
-        {
-            type: "react-component",
-            component: "catalog-plot",
-            title: "Catalog Plot",
-            id: "catalog-plot"
-        }
-    ],
-    [
-        "spectral-line-query",
-        {
-            type: "react-component",
-            component: "spectral-line-query",
-            title: "Spectral Line Query",
-            id: "spectral-line-query"
-        }
-    ],
-    [
-        "cursor-info",
-        {
-            type: "react-component",
-            component: "cursor-info",
-            title: "Cursor Info",
-            id: "cursor-info"
-        }
     ]
+    // [
+    //     "region-list",
+    //     {
+    //         type: "react-component",
+    //         component: "region-list",
+    //         title: "Region List",
+    //         id: "region-list"
+    //     }
+    // ],
+    // [
+    //     "animator",
+    //     {
+    //         type: "react-component",
+    //         component: "animator",
+    //         title: "Animator",
+    //         id: "animator"
+    //     }
+    // ],
+    // [
+    //     "spatial-profiler",
+    //     {
+    //         type: "react-component",
+    //         component: "spatial-profiler",
+    //         id: "spatial-profiler"
+    //     }
+    // ],
+    // [
+    //     "spectral-profiler",
+    //     {
+    //         type: "react-component",
+    //         component: "spectral-profiler",
+    //         id: "spectral-profiler",
+    //         title: "Z Profile: Cursor"
+    //     }
+    // ],
+    // [
+    //     "stokes",
+    //     {
+    //         type: "react-component",
+    //         component: "stokes",
+    //         id: "stokes",
+    //         title: "Stokes Analysis"
+    //     }
+    // ],
+    // [
+    //     "histogram",
+    //     {
+    //         type: "react-component",
+    //         component: "histogram",
+    //         title: "Histogram",
+    //         id: "histogram"
+    //     }
+    // ],
+    // [
+    //     "stats",
+    //     {
+    //         type: "react-component",
+    //         component: "stats",
+    //         title: "Statistics",
+    //         id: "stats"
+    //     }
+    // ],
+    // [
+    //     "layer-list",
+    //     {
+    //         type: "react-component",
+    //         component: "layer-list",
+    //         title: "Image List",
+    //         id: "layer-list"
+    //     }
+    // ],
+    // [
+    //     "log",
+    //     {
+    //         type: "react-component",
+    //         component: "log",
+    //         title: "Log",
+    //         id: "log"
+    //     }
+    // ],
+    // [
+    //     "catalog-overlay",
+    //     {
+    //         type: "react-component",
+    //         component: "catalog-overlay",
+    //         title: "Catalog Overlay",
+    //         id: "catalog-overlay"
+    //     }
+    // ],
+    // [
+    //     "catalog-plot",
+    //     {
+    //         type: "react-component",
+    //         component: "catalog-plot",
+    //         title: "Catalog Plot",
+    //         id: "catalog-plot"
+    //     }
+    // ],
+    // [
+    //     "spectral-line-query",
+    //     {
+    //         type: "react-component",
+    //         component: "spectral-line-query",
+    //         title: "Spectral Line Query",
+    //         id: "spectral-line-query"
+    //     }
+    // ],
+    // [
+    //     "cursor-info",
+    //     {
+    //         type: "react-component",
+    //         component: "cursor-info",
+    //         title: "Cursor Info",
+    //         id: "cursor-info"
+    //     }
+    // ]
 ]);
 
 export class LayoutConfig {

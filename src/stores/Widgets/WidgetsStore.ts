@@ -1043,7 +1043,8 @@ export class WidgetsStore {
         if (activeImage && activeImage.type !== ImageType.PV_PREVIEW) {
             newTitle = activeImage?.store?.filename ?? "";
         } else {
-            newTitle = "No image loaded";
+            // newTitle = "No image loaded";
+            newTitle = "";
         }
 
         // Update GL title by searching for image-view components
