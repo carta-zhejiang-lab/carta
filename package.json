@@ -1,215 +1,310 @@
 {
-    "name": "carta-frontend",
-    "version": "5.0.0-dev",
-    "repository": "https://github.com/CARTAvis/carta-frontend",
-    "description": "The browser-based frontend component of CARTA, a radio-astronomy visualization tool designed for the ALMA, the VLA and the SKA pathfinders.",
-    "homepage": "./",
-    "devDependencies": {
-        "@blueprintjs/core": "^5.11.0",
-        "@blueprintjs/icons": "^5.7.1",
-        "@blueprintjs/select": "^5.2.2",
-        "@blueprintjs/table": "^5.1.8",
-        "@testing-library/jest-dom": "^6.4.8",
-        "@testing-library/react": "^12.1.5",
-        "@testing-library/user-event": "^14.5.2",
-        "@types/jest": "^29.5.12",
-        "@types/jquery": "^3.5.30",
-        "@types/lodash": "^4.17.7",
-        "@types/node": "^20.14.13",
-        "@types/plotly.js": "^2.33.3",
-        "@types/prismjs": "^1.26.4",
-        "@types/react": "^17.0.80",
-        "@types/react-color": "^3.0.12",
-        "@types/react-dom": "^17.0.25",
-        "@types/react-plotly.js": "^2.6.3",
-        "@types/react-virtualized-auto-sizer": "^1.0.4",
-        "@types/react-window": "^1.8.8",
-        "@types/tinycolor2": "^1.4.6",
-        "ajv": "^8.17.1",
-        "assert": "^2.1.0",
-        "axios": "^1.7.2",
-        "buffer": "^6.0.3",
-        "chart.js": "^4.4.3",
-        "classnames": "^2.5.1",
-        "constants-browserify": "^1.0.0",
-        "crypto-browserify": "^3.12.0",
-        "eslint-plugin-simple-import-sort": "^12.1.1",
-        "eslint-plugin-tsdoc": "^0.3.0",
-        "fuzzy-search": "^3.2.1",
-        "glob-to-regexp": "^0.4.1",
-        "golden-layout": "^1.5.9",
-        "html2canvas": "^1.4.1",
-        "idb": "^8.0.0",
-        "jest-canvas-mock": "^2.5.2",
-        "jwt-decode": "^4.0.0",
-        "konva": "^8.4.3",
-        "lodash": "^4.17.15",
-        "mnemonist": "^0.39.8",
-        "mobx": "^6.13.1",
-        "mobx-react": "^7.6.0",
-        "moment": "^2.30.1",
-        "npm-run-all": "^4.1.3",
-        "os-browserify": "^0.3.0",
-        "path-browserify": "^1.0.1",
-        "plotly.js": "^2.34.0",
-        "prettier": "3.3.3",
-        "preval.macro": "^5.0.0",
-        "prismjs": "^1.29.0",
-        "protobufjs": "^7.3.2",
-        "protobufjs-cli": "1.1.2",
-        "raw-loader": "^4.0.2",
-        "react": "^17.0.2",
-        "react-chartjs-2": "^5.2.0",
-        "react-color": "^2.17.3",
-        "react-dom": "^17.0.2",
-        "react-iframe": "^1.8.5",
-        "react-konva": "^17.0.2-6",
-        "react-plotly.js": "^2.6.0",
-        "react-resize-detector": "^9.1.1",
-        "react-rnd": "^10.4.11",
-        "react-scroll-to-bottom": "^4.2.0",
-        "react-simple-code-editor": "^0.14.1",
-        "react-split-pane": "^0.1.91",
-        "react-virtualized-auto-sizer": "^1.0.24",
-        "react-window": "^1.8.10",
-        "rxjs": "^7.8.1",
-        "sass": "^1.77.8",
-        "semver": "^7.6.3",
-        "source-map-explorer": "^2.5.3",
-        "stats-js": "^1.0.1",
-        "stream-browserify": "^3.0.0",
-        "tinycolor2": "^1.6.0",
-        "tsc-silent": "^1.2.2",
-        "typescript": "^5.5.4",
-        "util": "^0.12.5",
-        "uuid": "^10.0.0",
-        "worker-loader": "^3.0.8"
+  "name": "carta-frontend",
+  "version": "5.0.0-dev",
+  "repository": "https://github.com/CARTAvis/carta-frontend",
+  "description": "The browser-based frontend component of CARTA, a radio-astronomy visualization tool designed for the ALMA, the VLA and the SKA pathfinders.",
+  "homepage": "./",
+  "devDependencies": {
+    "@blueprintjs/core": "^5.11.0",
+    "@blueprintjs/icons": "^5.7.1",
+    "@blueprintjs/select": "^5.2.2",
+    "@blueprintjs/table": "^5.1.8",
+    "@testing-library/jest-dom": "^6.4.8",
+    "@testing-library/react": "^12.1.5",
+    "@testing-library/user-event": "^14.5.2",
+    "@types/jest": "^29.5.12",
+    "@types/jquery": "^3.5.30",
+    "@types/lodash": "^4.17.7",
+    "@types/node": "^20.14.13",
+    "@types/plotly.js": "^2.33.3",
+    "@types/prismjs": "^1.26.4",
+    "@types/react": "^17.0.80",
+    "@types/react-color": "^3.0.12",
+    "@types/react-dom": "^17.0.25",
+    "@types/react-plotly.js": "^2.6.3",
+    "@types/react-virtualized-auto-sizer": "^1.0.4",
+    "@types/react-window": "^1.8.8",
+    "@types/tinycolor2": "^1.4.6",
+    "ajv": "^8.17.1",
+    "assert": "^2.1.0",
+    "axios": "^1.7.2",
+    "buffer": "^6.0.3",
+    "chart.js": "^4.4.3",
+    "classnames": "^2.5.1",
+    "constants-browserify": "^1.0.0",
+    "crypto-browserify": "^3.12.0",
+    "eslint-plugin-simple-import-sort": "^12.1.1",
+    "eslint-plugin-tsdoc": "^0.3.0",
+    "fuzzy-search": "^3.2.1",
+    "glob-to-regexp": "^0.4.1",
+    "golden-layout": "^1.5.9",
+    "html2canvas": "^1.4.1",
+    "idb": "^8.0.0",
+    "jest-canvas-mock": "^2.5.2",
+    "jwt-decode": "^4.0.0",
+    "konva": "^8.4.3",
+    "lodash": "^4.17.15",
+    "mnemonist": "^0.39.8",
+    "mobx": "^6.13.1",
+    "mobx-react": "^7.6.0",
+    "moment": "^2.30.1",
+    "npm-run-all": "^4.1.3",
+    "os-browserify": "^0.3.0",
+    "path-browserify": "^1.0.1",
+    "plotly.js": "^2.34.0",
+    "prettier": "3.3.3",
+    "preval.macro": "^5.0.0",
+    "prismjs": "^1.29.0",
+    "protobufjs": "^7.3.2",
+    "protobufjs-cli": "1.1.2",
+    "raw-loader": "^4.0.2",
+    "react": "^17.0.2",
+    "react-chartjs-2": "^5.2.0",
+    "react-color": "^2.17.3",
+    "react-dom": "^17.0.2",
+    "react-iframe": "^1.8.5",
+    "react-konva": "^17.0.2-6",
+    "react-plotly.js": "^2.6.0",
+    "react-resize-detector": "^9.1.1",
+    "react-rnd": "^10.4.11",
+    "react-scroll-to-bottom": "^4.2.0",
+    "react-simple-code-editor": "^0.14.1",
+    "react-split-pane": "^0.1.91",
+    "react-virtualized-auto-sizer": "^1.0.24",
+    "react-window": "^1.8.10",
+    "rxjs": "^7.8.1",
+    "sass": "^1.77.8",
+    "semver": "^7.6.3",
+    "source-map-explorer": "^2.5.3",
+    "stats-js": "^1.0.1",
+    "stream-browserify": "^3.0.0",
+    "tinycolor2": "^1.6.0",
+    "tsc-silent": "^1.2.2",
+    "typescript": "^5.5.4",
+    "util": "^0.12.5",
+    "uuid": "^10.0.0",
+    "worker-loader": "^3.0.8"
+  },
+  "scripts": {
+    "git-info": "./git-info.sh",
+    "analyze": "source-map-explorer build/static/js/main.*",
+    "postinstall": "patch-package",
+    "start": "node scripts/start.js",
+    "build": "npm run git-info; npm-run-all build-wrappers build-protobuf build-ts",
+    "build-docker": "npm run git-info; npm-run-all build-wrappers-docker build-protobuf build-ts",
+    "build-singularity": "npm run git-info; npm-run-all build-wrappers-singularity build-protobuf build-ts",
+    "build-ts": "react-scripts --max_old_space_size=4096 build",
+    "build-libs": "./wasm_libs/build_libs.sh",
+    "build-libs-docker": "./build_wasm_libs_docker.sh",
+    "build-libs-singularity": "./build_wasm_libs_singularity.sh",
+    "build-wrappers": "./wasm_src/build_wrappers.sh",
+    "build-wrappers-docker": "./build_wasm_wrappers_docker.sh",
+    "build-wrappers-singularity": "./build_wasm_wrappers_singularity.sh",
+    "build-protobuf": "./protobuf/build_proto.sh",
+    "test": "node scripts/test.js --env=jsdom",
+    "reformat": "npx prettier --write ./src",
+    "checkformat": "npx prettier --check ./src",
+    "prepack": "npm run build-libs-docker; npm run build-docker",
+    "fix-eslint": "eslint --fix ./src",
+    "check-eslint": "eslint ./src",
+    "strict-null-checks": "npx tsc-silent -p tsconfig.strictNullChecks.json --suppressConfig tsc-silent.config.js"
+  },
+  "eslintConfig": {
+    "extends": "react-app",
+    "plugins": [
+      "simple-import-sort",
+      "eslint-plugin-tsdoc"
+    ],
+    "rules": {
+      "no-unused-expressions": "off",
+      "@typescript-eslint/no-unused-expressions": "error",
+      "import/no-webpack-loader-syntax": "off",
+      "no-unused-vars": "off",
+      "@typescript-eslint/no-unused-vars": [
+        "error",
+        {
+          "args": "none"
+        }
+      ],
+      "object-curly-spacing": "off",
+      "jsx-a11y/alt-text": "off",
+      "simple-import-sort/imports": "error",
+      "simple-import-sort/exports": "error",
+      "import/newline-after-import": "error",
+      "import/no-duplicates": "error",
+      "tsdoc/syntax": "error"
     },
-    "scripts": {
-        "git-info": "./git-info.sh",
-        "analyze": "source-map-explorer build/static/js/main.*",
-        "postinstall": "patch-package",
-        "start": "react-scripts start",
-        "build": "npm run git-info; npm-run-all build-wrappers build-protobuf build-ts",
-        "build-docker": "npm run git-info; npm-run-all build-wrappers-docker build-protobuf build-ts",
-        "build-singularity": "npm run git-info; npm-run-all build-wrappers-singularity build-protobuf build-ts",
-        "build-ts": "react-scripts --max_old_space_size=4096 build",
-        "build-libs": "./wasm_libs/build_libs.sh",
-        "build-libs-docker": "./build_wasm_libs_docker.sh",
-        "build-libs-singularity": "./build_wasm_libs_singularity.sh",
-        "build-wrappers": "./wasm_src/build_wrappers.sh",
-        "build-wrappers-docker": "./build_wasm_wrappers_docker.sh",
-        "build-wrappers-singularity": "./build_wasm_wrappers_singularity.sh",
-        "build-protobuf": "./protobuf/build_proto.sh",
-        "test": "react-scripts test --env=jsdom",
-        "eject": "react-scripts eject",
-        "reformat": "npx prettier --write ./src",
-        "checkformat": "npx prettier --check ./src",
-        "prepack": "npm run build-libs-docker; npm run build-docker",
-        "fix-eslint": "eslint --fix ./src",
-        "check-eslint": "eslint ./src",
-        "strict-null-checks": "npx tsc-silent -p tsconfig.strictNullChecks.json --suppressConfig tsc-silent.config.js"
-    },
-    "eslintConfig": {
-        "extends": "react-app",
-        "plugins": [
-            "simple-import-sort",
-            "eslint-plugin-tsdoc"
+    "overrides": [
+      {
+        "files": [
+          "*.js",
+          "*.jsx",
+          "*.ts",
+          "*.tsx"
         ],
         "rules": {
-            "no-unused-expressions": "off",
-            "@typescript-eslint/no-unused-expressions": "error",
-            "import/no-webpack-loader-syntax": "off",
-            "no-unused-vars": "off",
-            "@typescript-eslint/no-unused-vars": [
-                "error",
-                {
-                    "args": "none"
-                }
-            ],
-            "object-curly-spacing": "off",
-            "jsx-a11y/alt-text": "off",
-            "simple-import-sort/imports": "error",
-            "simple-import-sort/exports": "error",
-            "import/newline-after-import": "error",
-            "import/no-duplicates": "error",
-            "tsdoc/syntax": "error"
-        },
-        "overrides": [
+          "simple-import-sort/imports": [
+            "error",
             {
-                "files": [
-                    "*.js",
-                    "*.jsx",
-                    "*.ts",
-                    "*.tsx"
+              "groups": [
+                [
+                  "^react",
+                  "^@?\\w"
                 ],
-                "rules": {
-                    "simple-import-sort/imports": [
-                        "error",
-                        {
-                            "groups": [
-                                [
-                                    "^react",
-                                    "^@?\\w"
-                                ],
-                                [
-                                    "^(components|icons|models|services|stores|utilities)(/.*|$)"
-                                ],
-                                [
-                                    "^\\u0000"
-                                ],
-                                [
-                                    "^\\.\\.(?!/?$)",
-                                    "^\\.\\./?$"
-                                ],
-                                [
-                                    "^\\./(?=.*/)(?!/?$)",
-                                    "^\\.(?!/?$)",
-                                    "^\\./?$"
-                                ],
-                                [
-                                    "^.+\\.?(css)$"
-                                ]
-                            ]
-                        }
-                    ]
-                }
+                [
+                  "^(components|icons|models|services|stores|utilities)(/.*|$)"
+                ],
+                [
+                  "^\\u0000"
+                ],
+                [
+                  "^\\.\\.(?!/?$)",
+                  "^\\.\\./?$"
+                ],
+                [
+                  "^\\./(?=.*/)(?!/?$)",
+                  "^\\.(?!/?$)",
+                  "^\\./?$"
+                ],
+                [
+                  "^.+\\.?(css)$"
+                ]
+              ]
             }
-        ]
-    },
-    "browserslist": {
-        "production": [
-            "last 2 chrome versions",
-            "last 2 firefox versions",
-            "last 2 safari versions"
-        ],
-        "development": [
-            "last 1 chrome version",
-            "last 1 firefox version",
-            "last 1 safari version"
-        ]
-    },
-    "jest": {
-        "transformIgnorePatterns": [
-            "node_modules/(?!(konva|@blueprintjs|axios|usehooks-ts))"
-        ],
-        "moduleNameMapper": {
-            "canvas": "jest-canvas-mock",
-            "zfp_wrapper": "<rootDir>/src/__mocks__/ZFPWorkerMock.js"
+          ]
         }
+      }
+    ]
+  },
+  "browserslist": {
+    "production": [
+      "last 2 chrome versions",
+      "last 2 firefox versions",
+      "last 2 safari versions"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "jest": {
+    "roots": [
+      "<rootDir>/src"
+    ],
+    "collectCoverageFrom": [
+      "src/**/*.{js,jsx,ts,tsx}",
+      "!src/**/*.d.ts"
+    ],
+    "setupFiles": [
+      "react-app-polyfill/jsdom"
+    ],
+    "setupFilesAfterEnv": [
+      "<rootDir>/src/setupTests.js"
+    ],
+    "testMatch": [
+      "<rootDir>/src/**/__tests__/**/*.{js,jsx,ts,tsx}",
+      "<rootDir>/src/**/*.{spec,test}.{js,jsx,ts,tsx}"
+    ],
+    "testEnvironment": "jsdom",
+    "transform": {
+      "^.+\\.(js|jsx|mjs|cjs|ts|tsx)$": "<rootDir>/config/jest/babelTransform.js",
+      "^.+\\.css$": "<rootDir>/config/jest/cssTransform.js",
+      "^(?!.*\\.(js|jsx|mjs|cjs|ts|tsx|css|json)$)": "<rootDir>/config/jest/fileTransform.js"
     },
-    "dependencies": {
-        "patch-package": "^8.0.0",
-        "react-scripts": "^5.0.1",
-        "usehooks-ts": "^3.1.0"
+    "transformIgnorePatterns": [
+      "node_modules/(?!(konva|@blueprintjs|axios|usehooks-ts))"
+    ],
+    "modulePaths": [
+      "/Users/runze/workspace/carta-frontend/src"
+    ],
+    "moduleNameMapper": {
+      "^react-native$": "react-native-web",
+      "^.+\\.module\\.(css|sass|scss)$": "identity-obj-proxy",
+      "canvas": "jest-canvas-mock",
+      "zfp_wrapper": "<rootDir>/src/__mocks__/ZFPWorkerMock.js"
     },
-    "overrides": {
-        "react": "^17.0.2",
-        "react-dom": "^17.0.2",
-        "typescript": "^5.5.4",
-        "fork-ts-checker-webpack-plugin": "^6.5.3",
-        "@typescript-eslint/typescript-estree": "^7.15.0",
-        "@typescript-eslint/parser": "^7.15.0",
-        "@types/trusted-types": "^2.0.7"
-    }
+    "moduleFileExtensions": [
+      "web.js",
+      "js",
+      "web.ts",
+      "ts",
+      "web.tsx",
+      "tsx",
+      "json",
+      "web.jsx",
+      "jsx",
+      "node"
+    ],
+    "watchPlugins": [
+      "jest-watch-typeahead/filename",
+      "jest-watch-typeahead/testname"
+    ],
+    "resetMocks": true
+  },
+  "dependencies": {
+    "@babel/core": "^7.16.0",
+    "@pmmmwh/react-refresh-webpack-plugin": "^0.5.3",
+    "@svgr/webpack": "^5.5.0",
+    "babel-jest": "^27.4.2",
+    "babel-loader": "^8.2.3",
+    "babel-plugin-named-asset-import": "^0.3.8",
+    "babel-preset-react-app": "^10.0.1",
+    "bfj": "^7.0.2",
+    "browserslist": "^4.18.1",
+    "camelcase": "^6.2.1",
+    "case-sensitive-paths-webpack-plugin": "^2.4.0",
+    "css-loader": "^6.5.1",
+    "css-minimizer-webpack-plugin": "^3.2.0",
+    "dotenv": "^10.0.0",
+    "dotenv-expand": "^5.1.0",
+    "eslint": "^8.3.0",
+    "eslint-config-react-app": "^7.0.1",
+    "eslint-webpack-plugin": "^3.1.1",
+    "file-loader": "^6.2.0",
+    "fs-extra": "^10.0.0",
+    "html-webpack-plugin": "^5.5.0",
+    "identity-obj-proxy": "^3.0.0",
+    "jest": "^27.4.3",
+    "jest-resolve": "^27.4.2",
+    "jest-watch-typeahead": "^1.0.0",
+    "mini-css-extract-plugin": "^2.4.5",
+    "patch-package": "^8.0.0",
+    "postcss": "^8.4.4",
+    "postcss-flexbugs-fixes": "^5.0.2",
+    "postcss-loader": "^6.2.1",
+    "postcss-normalize": "^10.0.1",
+    "postcss-preset-env": "^7.0.1",
+    "prompts": "^2.4.2",
+    "react-app-polyfill": "^3.0.0",
+    "react-dev-utils": "^12.0.1",
+    "react-refresh": "^0.11.0",
+    "resolve": "^1.20.0",
+    "resolve-url-loader": "^4.0.0",
+    "sass-loader": "^12.3.0",
+    "semver": "^7.3.5",
+    "source-map-loader": "^3.0.0",
+    "style-loader": "^3.3.1",
+    "tailwindcss": "^3.0.2",
+    "terser-webpack-plugin": "^5.2.5",
+    "usehooks-ts": "^3.1.0",
+    "webpack": "^5.64.4",
+    "webpack-dev-server": "^4.6.0",
+    "webpack-manifest-plugin": "^4.0.2",
+    "workbox-webpack-plugin": "^6.4.1"
+  },
+  "overrides": {
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "typescript": "^5.5.4",
+    "fork-ts-checker-webpack-plugin": "^6.5.3",
+    "@typescript-eslint/typescript-estree": "^7.15.0",
+    "@typescript-eslint/parser": "^7.15.0",
+    "@types/trusted-types": "^2.0.7"
+  },
+  "babel": {
+    "presets": [
+      "react-app"
+    ]
+  }
 }
