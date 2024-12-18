@@ -1,19 +1,20 @@
 import * as React from "react";
 import ReactResizeDetector from "react-resize-detector";
-import {Alert, Classes, Intent} from "@blueprintjs/core";
+import {Alert, Classes, Dialog, Intent} from "@blueprintjs/core";
 import classNames from "classnames";
 import {observer} from "mobx-react";
 
-import {FloatingWidgetManagerComponent, UIControllerComponent} from "components";
+import {FloatingWidgetManagerComponent, SpatialProfilerComponent, UIControllerComponent} from "components";
 import {TaskProgressDialogComponent} from "components/Dialogs";
 import {ApiService} from "services";
-import {AlertStore, AlertType, AppStore} from "stores";
+import {AlertStore, AlertType, AppStore, SpatialProfileStore} from "stores";
 
 import {HotkeyTargetContainer} from "./HotkeyWrapper";
 
 import "./App.scss";
 import "./layout-base.scss";
 import "./layout-theme.scss";
+import FileInfoPanel from "components/FileInfoPanel";
 
 @observer
 export class App extends React.Component {
@@ -84,7 +85,9 @@ export class App extends React.Component {
 
         return (
             <div className={className}>
-                <UIControllerComponent />
+                {appStore.fileParams && +appStore.fileParams.level !== 2 && <UIControllerComponent />}
+
+                <FileInfoPanel />
                 {alertComponent}
                 <TaskProgressDialogComponent
                     progress={undefined}
@@ -97,7 +100,18 @@ export class App extends React.Component {
                     <ReactResizeDetector handleWidth handleHeight onResize={this.onContainerResize} refreshMode={"throttle"} refreshRate={200}></ReactResizeDetector>
                 </div>
                 <HotkeyTargetContainer />
-                <FloatingWidgetManagerComponent />
+                {/* <FloatingWidgetManagerComponent /> */}
+                <Dialog
+                    title="亮度分布"
+                    style={{width: "max-content"}}
+                    isOpen={appStore.showSpatialProfilerDialog}
+                    onClose={() => {
+                        appStore.showSpatialProfilerDialog = false;
+                        appStore.deleteAllRegions();
+                    }}
+                >
+                    <SpatialProfilerComponent id="spatial-profiler" docked />
+                </Dialog>
             </div>
         );
     }

@@ -1,6 +1,6 @@
 import * as React from "react";
 import {CSSProperties} from "react";
-import {AnchorButton, Button, ButtonGroup, Classes, Collapse, FormGroup, IconName, Menu, MenuDivider, MenuItem, Popover, PopoverInteractionKind, PopoverPosition, Position, Switch, Tooltip} from "@blueprintjs/core";
+import {AnchorButton, Button, ButtonGroup, Classes, Collapse, FormGroup, Icon, IconName, Menu, MenuDivider, MenuItem, Popover, PopoverInteractionKind, PopoverPosition, Position, Radio, RadioGroup, Switch, Tooltip} from "@blueprintjs/core";
 import {CARTA} from "carta-protobuf";
 import classNames from "classnames";
 import {observer} from "mobx-react";
@@ -9,11 +9,13 @@ import {ImageViewComponent, ImageViewLayer} from "components";
 import {AnnotationMenuComponent, ExportImageMenuComponent} from "components/Shared";
 import {CustomIcon, CustomIconName} from "icons/CustomIcons";
 import {AppStore} from "stores";
-import {FrameStore, RegionMode, RegionStore} from "stores/Frame";
+import {FrameScaling, FrameStore, RegionMode, RegionStore, RenderConfigStore} from "stores/Frame";
 import {OverlayStore, SystemType} from "stores/OverlayStore/OverlayStore";
 import {toFixed} from "utilities";
+import {NewCustomIcon} from "icons/NewCustomIcons";
 
 import "./ToolbarComponent.scss";
+import {makeObservable, observable} from "mobx";
 
 export class ToolbarComponentProps {
     docked: boolean;
@@ -112,18 +114,25 @@ export class ToolbarComponent extends React.Component<ToolbarComponentProps> {
         );
     };
 
+    componentDidMount(): void {
+        AppStore.Instance.overlayStore.toggleLabels();
+    }
+
     render() {
         const appStore = AppStore.Instance;
         const overlay = appStore.overlayStore;
         const frame = this.props.frame;
         const grid = overlay.grid;
-
         const styleProps: CSSProperties = {
             bottom: overlay.padding.bottom,
-            right: overlay.padding.right,
-            left: overlay.padding.left,
+            right: "40px",
+            top: "40px",
+            height: "fit-content",
+            // right: overlay.padding.right,
+            // left: overlay.padding.left,
             opacity: this.props.visible ? 1 : 0,
-            backgroundColor: "transparent"
+            backgroundColor: "transparent",
+            flexDirection: "column"
         };
 
         const className = classNames("image-toolbar", {docked: this.props.docked, [Classes.DARK]: appStore.darkTheme});
@@ -137,7 +146,7 @@ export class ToolbarComponent extends React.Component<ToolbarComponentProps> {
                 </i>
             </span>
         );
-        const tooltipPosition: PopoverPosition = "top";
+        const tooltipPosition: PopoverPosition = "left";
 
         const annotationMenu = (
             <Menu style={{padding: 0}}>
@@ -220,11 +229,21 @@ export class ToolbarComponent extends React.Component<ToolbarComponentProps> {
                 <MenuItem text="None" disabled={!canEnableSpatialMatching} active={!spectralMatchingEnabled && !spatialMatchingEnabled} onClick={() => appStore.setMatchingEnabled(false, false)} />
             </Menu>
         );
-
-        const exportImageMenu = (
-            <Menu>
-                <ExportImageMenuComponent />
-            </Menu>
+        const scalingMenu = (
+            <RadioGroup
+                className="scaling-radio-group"
+                selectedValue={frame.renderConfig.scaling}
+                onChange={(e: any) => {
+                    frame.renderConfig.setScaling(+e.target.value);
+                }}
+            >
+                <Radio label={RenderConfigStore.SCALING_TYPES.get(FrameScaling.LINEAR)} value={FrameScaling.LINEAR}></Radio>
+                <Radio label={RenderConfigStore.SCALING_TYPES.get(FrameScaling.LOG)} value={FrameScaling.LOG}></Radio>
+                <Radio label={RenderConfigStore.SCALING_TYPES.get(FrameScaling.SQRT)} value={FrameScaling.SQRT}></Radio>
+                <Radio label={RenderConfigStore.SCALING_TYPES.get(FrameScaling.SQUARE)} value={FrameScaling.SQUARE}></Radio>
+                <Radio label={RenderConfigStore.SCALING_TYPES.get(FrameScaling.GAMMA)} value={FrameScaling.GAMMA}></Radio>
+                <Radio label={RenderConfigStore.SCALING_TYPES.get(FrameScaling.POWER)} value={FrameScaling.POWER}></Radio>
+            </RadioGroup>
         );
 
         const baseFrame = this.props.frame;
@@ -246,7 +265,7 @@ export class ToolbarComponent extends React.Component<ToolbarComponentProps> {
                     <React.Fragment>
                         {!frame.isPreview && (
                             <>
-                                <Tooltip
+                                {/* <Tooltip
                                     position={tooltipPosition}
                                     content={
                                         <span>
@@ -321,7 +340,7 @@ export class ToolbarComponent extends React.Component<ToolbarComponentProps> {
                                     >
                                         <AnchorButton icon={frame.regionSet.isNewRegionAnnotation ? "annotation" : regionIcon} onClick={() => this.handleActiveLayerClicked(ImageViewLayer.RegionCreating)} />
                                     </Tooltip>
-                                )}
+                                )} */}
                                 <Tooltip
                                     position={tooltipPosition}
                                     content={
@@ -336,32 +355,45 @@ export class ToolbarComponent extends React.Component<ToolbarComponentProps> {
                                         </span>
                                     }
                                 >
-                                    <AnchorButton
-                                        icon={"hand"}
+                                    <div
+                                        className={`toolbar-icon toolbar-icon-${frame.regionSet.mode === RegionMode.MOVING && appStore.activeLayer === ImageViewLayer.RegionMoving ? "active" : ""}`}
                                         onClick={() => this.handleActiveLayerClicked(ImageViewLayer.RegionMoving)}
                                         onDoubleClick={this.handlePanZoomShortCutClicked}
-                                        active={frame.regionSet.mode === RegionMode.MOVING && appStore.activeLayer === ImageViewLayer.RegionMoving}
-                                    />
+                                    >
+                                        <NewCustomIcon icon="pointer" size={26} />
+                                    </div>
                                 </Tooltip>
                             </>
                         )}
+
+                        <Tooltip position={tooltipPosition} content={<span>Create line region</span>}>
+                            <div className={`toolbar-icon`} onClick={() => this.handleRegionTypeClicked(CARTA.RegionType.LINE)}>
+                                <NewCustomIcon icon="line" size={26} />
+                            </div>
+                        </Tooltip>
                         <Tooltip position={tooltipPosition} content={<span>Zoom in (scroll wheel up){currentZoomSpan}</span>}>
-                            <AnchorButton icon={"zoom-in"} onClick={this.handleZoomInClicked} data-testid="zoom-in-button" />
+                            <div className="toolbar-icon" onClick={this.handleZoomInClicked} data-testid="zoom-in-button">
+                                <NewCustomIcon icon="zoom" size={26} />
+                            </div>
                         </Tooltip>
                         <Tooltip position={tooltipPosition} content={<span>Zoom out (scroll wheel down){currentZoomSpan}</span>}>
-                            <AnchorButton icon={"zoom-out"} onClick={this.handleZoomOutClicked} />
+                            <div className="toolbar-icon" onClick={this.handleZoomOutClicked}>
+                                <NewCustomIcon icon="zoomIn" size={26} />
+                            </div>
                         </Tooltip>
                         {!frame.isPreview && (
                             <Tooltip position={tooltipPosition} content={<span>Zoom to 1.0x{currentZoomSpan}</span>}>
-                                <AnchorButton className={"full-zoom-button"} onClick={this.handleZoomToActualSizeClicked}>
-                                    1.0x
-                                </AnchorButton>
+                                <div className="toolbar-icon" onClick={this.props.onZoomToFit}>
+                                    <NewCustomIcon icon="fullscreen" size={26} />
+                                </div>
                             </Tooltip>
                         )}
                         <Tooltip position={tooltipPosition} content={<span>Zoom to fit{currentZoomSpan}</span>}>
-                            <AnchorButton icon="zoom-to-fit" onClick={this.props.onZoomToFit} data-testid="zoom-to-fit-button" />
+                            <div className="toolbar-icon" onClick={this.handleZoomToActualSizeClicked}>
+                                <NewCustomIcon icon="fit" size={26} />
+                            </div>
                         </Tooltip>
-                        {!frame.isPreview && (
+                        {/* {!frame.isPreview && (
                             <>
                                 <Popover content={wcsMatchingMenu} position={Position.TOP} minimal={true}>
                                     <Tooltip
@@ -396,35 +428,22 @@ export class ToolbarComponent extends React.Component<ToolbarComponentProps> {
                                     </Tooltip>
                                 </Popover>
                             </>
-                        )}
+                        )} */}
                         <Tooltip position={tooltipPosition} content="Toggle grid">
-                            <AnchorButton icon="grid" active={grid.visible} onClick={() => grid.setVisible(!grid.visible)} data-testid="grid-button" />
+                            <div className={`toolbar-icon toolbar-icon-${grid.visible ? "active" : ""}`} onClick={() => grid.setVisible(!grid.visible)}>
+                                <NewCustomIcon icon="grid" size={26} />
+                            </div>
                         </Tooltip>
-                        {!frame.isPreview && (
-                            <>
-                                <Tooltip position={tooltipPosition} content="Toggle labels">
-                                    <AnchorButton icon="numerical" active={!overlay.labelsHidden} onClick={overlay.toggleLabels} />
-                                </Tooltip>
-                                <Popover content={exportImageMenu} position={Position.TOP} minimal={true}>
-                                    <Tooltip
-                                        position={tooltipPosition}
-                                        content={
-                                            <span>
-                                                Export image
-                                                {this.exportImageTooltip()}
-                                            </span>
-                                        }
-                                    >
-                                        <AnchorButton disabled={appStore.isExportingImage} icon="floppy-disk" />
-                                    </Tooltip>
-                                </Popover>
-                            </>
-                        )}
+                        <Popover content={scalingMenu} position={Position.LEFT} minimal={true}>
+                            <div className="toolbar-icon">
+                                <NewCustomIcon icon="linear" size={26} />
+                            </div>
+                        </Popover>
                     </React.Fragment>
                 )}
-                <Tooltip position={tooltipPosition} content={appStore.toolbarExpanded ? "Hide toolbar" : "Show toolbar"}>
+                {/* <Tooltip position={tooltipPosition} content={appStore.toolbarExpanded ? "Hide toolbar" : "Show toolbar"}>
                     <AnchorButton active={appStore.toolbarExpanded} icon={appStore.toolbarExpanded ? "double-chevron-right" : "double-chevron-left"} onClick={appStore.toggleToolbarExpanded} />
-                </Tooltip>
+                </Tooltip> */}
             </ButtonGroup>
         );
     }

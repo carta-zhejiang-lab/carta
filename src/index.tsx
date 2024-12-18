@@ -43,7 +43,7 @@ async function fetchConfig() {
         <OverlaysProvider>
             <App />
         </OverlaysProvider>,
-        document.getElementById("root") as HTMLElement
+        document.getElementById("cartaRoot") as HTMLElement
     );
 }
 

@@ -1,3 +1,4 @@
+// @ts-nocheck
 import * as React from "react";
 import Plot from "react-plotly.js";
 import ReactResizeDetector from "react-resize-detector";

@@ -69,6 +69,7 @@ export class BackendService {
     public sessionId: number;
     public serverFeatureFlags: number;
     public serverUrl: string;
+    public logging: boolean = false;
 
     private connection: WebSocket;
     private lastPingTime: number;
@@ -294,12 +295,12 @@ export class BackendService {
         }
     }
 
-    async getFileInfo(directory: string | null | undefined, file: string | null | undefined, hdu: string | undefined): Promise<CARTA.IFileInfoResponse> {
+    async getFileInfo(directory: string | null | undefined, file: string | null | undefined, hdu: string | undefined, isPersonalData?: boolean, id?: string | undefined, level?: string | undefined): Promise<CARTA.IFileInfoResponse> {
         if (this.connectionStatus !== ConnectionStatus.ACTIVE) {
             throw new Error("Not connected");
         } else {
             const supportAipsBeam = AppStore.Instance.preferenceStore.aipsBeamSupport;
-            const message = CARTA.FileInfoRequest.create({directory, file, hdu, supportAipsBeam});
+            const message = CARTA.FileInfoRequest.create({directory, file, hdu, supportAipsBeam, isPersonalData, id, level});
             const requestId = this.eventCounter;
             this.logEvent(CARTA.EventType.FILE_INFO_REQUEST, requestId, message, false);
             if (this.sendEvent(CARTA.EventType.FILE_INFO_REQUEST, CARTA.FileInfoRequest.encode(message).finish())) {
@@ -380,7 +381,7 @@ export class BackendService {
         }
     }
 
-    async loadFile(directory: string, file: string, hdu: string, fileId: number, imageArithmetic: boolean): Promise<CARTA.IOpenFileAck> {
+    async loadFile(directory: string, file: string, hdu: string, fileId: number, imageArithmetic: boolean, isPersonalData?: boolean, id?: string, level?: string): Promise<CARTA.IOpenFileAck> {
         if (this.connectionStatus !== ConnectionStatus.ACTIVE) {
             throw new Error("Not connected");
         } else {
@@ -391,7 +392,10 @@ export class BackendService {
                 fileId,
                 lelExpr: imageArithmetic,
                 renderMode: CARTA.RenderMode.RASTER,
-                supportAipsBeam: AppStore.Instance.preferenceStore.aipsBeamSupport
+                supportAipsBeam: AppStore.Instance.preferenceStore.aipsBeamSupport,
+                isPersonalData,
+                level,
+                id
             });
             const requestId = this.eventCounter;
             this.logEvent(CARTA.EventType.OPEN_FILE, requestId, message, false);
@@ -1040,19 +1044,18 @@ export class BackendService {
     }
 
     private logEvent(eventType: CARTA.EventType, eventId: number, message: any, incoming: boolean = true) {
+        if (!this.logging) return;
         const eventName = CARTA.EventType[eventType];
-        if (this.loggingEnabled && PreferenceStore.Instance.isEventLoggingEnabled(eventType)) {
-            if (incoming) {
-                if (eventId === 0) {
-                    console.log(`<== ${eventName} [Stream]`);
-                } else {
-                    console.log(`<== ${eventName} [${eventId}]`);
-                }
+        if (incoming) {
+            if (eventId === 0) {
+                console.log(`<== ${eventName} [Stream]`);
             } else {
-                console.log(`${eventName} [${eventId}] ==>`);
+                console.log(`<== ${eventName} [${eventId}]`);
             }
-            console.log(message);
-            console.log("\n");
+        } else {
+            console.log(`${eventName} [${eventId}] ==>`);
         }
+        console.log(message);
+        console.log("\n");
     }
 }

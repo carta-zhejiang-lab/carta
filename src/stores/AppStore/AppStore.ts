@@ -1,3 +1,4 @@
+// @ts-nocheck
 import {Classes, Colors, OptionProps, setHotkeysDialogProps} from "@blueprintjs/core";
 import * as AST from "ast_wrapper";
 import axios from "axios";
@@ -124,6 +125,9 @@ export class AppStore {
     /** Configuration of the images in the image view widget. */
     readonly imageViewConfigStore = ImageViewConfigStore.Instance;
 
+    @observable fileResponse: any;
+    @observable fileParams: any;
+
     // WebAssembly Module status
     @observable astReady: boolean;
     @observable cartaComputeReady: boolean;
@@ -156,6 +160,8 @@ export class AppStore {
     @observable imageRatio = 1;
     @observable isExportingImage = false;
     @observable private isCanvasUpdated: boolean;
+
+    @observable showSpatialProfilerDialog = false;
 
     // dynamic zIndex
     public zIndexManager = new FloatingObjzIndexManager();
@@ -233,9 +239,29 @@ export class AppStore {
         try {
             await AST.onReady;
             this.setAstReady(true);
+            const query = {};
+            const queryArray = window.location.search.slice(1).split("&");
+            if (queryArray.length > 0) {
+                queryArray.forEach(i => {
+                    const arr = i.split("=");
+                    if (arr.length > 1) {
+                        const key = arr[0];
+                        const value = arr[1];
+                        query[key] = decodeURIComponent(value);
+                    }
+                });
+            }
+            this.backendService.logging = !!query.logging;
             const ack = await this.backendService.connect(wsURL);
             console.log(`Connected with session ID ${ack.sessionId}`);
             this.logStore.addInfo(`Connected to server ${wsURL} with session ID ${ack.sessionId}`, ["network"]);
+            if (query.isPersonalData) {
+                if (query.isPersonalData === "true") query.isPersonalData = true;
+                if (query.isPersonalData === "false") query.isPersonalData = false;
+            }
+            this.fileParams = query;
+            this.fileResponse = await this.backendService.getFileInfo("", "", "", this.fileParams.isPersonalData, this.fileParams.id, this.fileParams.level);
+            // this.fileResponse = await this.backendService.getFileInfo(".", "CSST_MSC_MS_SCI_20230425170015_20230425170245_10109200074165_23_L0_V01.fits", "");
         } catch (err) {
             console.error(err);
         }
@@ -655,7 +681,7 @@ export class AppStore {
      * @throws If there is an error loading the file.
      */
     @flow.bound
-    *loadFile(path: string, filename: string, hdu: string, imageArithmetic: boolean, setAsActive: boolean = true, updateStartingDirectory: boolean = true) {
+    *loadFile(path: string, filename: string, hdu: string, imageArithmetic: boolean, setAsActive: boolean = true, updateStartingDirectory: boolean = true, isPersonalData?: boolean, id?: string, level?: string) {
         this.startFileLoading();
 
         if (imageArithmetic) {
@@ -678,7 +704,7 @@ export class AppStore {
         }
 
         try {
-            const ack = yield this.backendService.loadFile(path, filename, hdu, this.fileCounter, imageArithmetic);
+            const ack = yield this.backendService.loadFile(path, filename, hdu, this.fileCounter, imageArithmetic, isPersonalData, id, level);
             this.fileCounter++;
             if (!this.addFrame(ack, path, imageArithmetic, hdu, false, setAsActive, updateStartingDirectory)) {
                 AppToaster.show({icon: "warning-sign", message: "Load file failed.", intent: "danger", timeout: 3000});
@@ -799,10 +825,10 @@ export class AppStore {
      * const openedFile = await openFile("/path/to/directory", "example.fits");
      */
     @flow.bound
-    *openFile(path: string, filename?: string, hdu?: string, imageArithmetic?: boolean, updateStartingDirectory: boolean = true) {
+    *openFile(path: string, filename?: string, hdu?: string, imageArithmetic?: boolean, updateStartingDirectory: boolean = true, isPersonalData?: boolean, id?: string, level?: string) {
         this.removeAllFrames();
         this.overlayStore.global.setSystem(SystemType.Auto);
-        return yield this.loadFile(path, filename, hdu, imageArithmetic, true, updateStartingDirectory);
+        return yield this.loadFile(path, filename, hdu, imageArithmetic, true, updateStartingDirectory, isPersonalData, id, level);
     }
 
     @flow.bound
@@ -1350,7 +1376,7 @@ export class AppStore {
                 this.deleteRegion(x);
             }
         });
-        AppToaster.show(SuccessToast("console", `Regions deleted successfully.`, 3000));
+        // AppToaster.show(SuccessToast("console", `Regions deleted successfully.`, 3000));
     };
 
     /**
@@ -1791,11 +1817,11 @@ export class AppStore {
         if (isAstReady && isZfpReady && isCartaComputeReady && isApiServiceAuthenticated) {
             try {
                 await this.preferenceStore.fetchPreferences();
-                this.telemetryService.checkAndGenerateId(true);
+                // this.telemetryService.checkAndGenerateId(true);
                 await this.connectToServer();
                 await this.fileBrowserStore.restoreStartingDirectory();
-                await this.layoutStore.fetchLayouts();
-                await this.snippetStore.fetchSnippets();
+                // await this.layoutStore.fetchLayouts();
+                // await this.snippetStore.fetchSnippets();
 
                 this.tileService.setCache(this.preferenceStore.gpuTileCache, this.preferenceStore.systemTileCache);
                 if (!this.layoutStore.applyLayout(this.preferenceStore.layout)) {
@@ -1807,9 +1833,9 @@ export class AppStore {
                 this.setCursorFrozen(this.preferenceStore.isCursorFrozen);
                 this.updateASTColors();
                 this.setSpectralMatchingType(this.preferenceStore.spectralMatchingType);
-                if (this.preferenceStore.checkNewRelease) {
-                    await this.checkNewRelease();
-                }
+                // if (this.preferenceStore.checkNewRelease) {
+                //     await this.checkNewRelease();
+                // }
             } catch (err) {
                 console.error(err);
             }
@@ -1922,11 +1948,11 @@ export class AppStore {
             switch (newConnectionStatus) {
                 case ConnectionStatus.ACTIVE:
                     AppToaster.clear();
-                    if (this.backendService.connectionDropped) {
-                        AppToaster.show(WarningToast(`Reconnected to server${userString}. Some errors may occur`));
-                    } else {
-                        AppToaster.show(SuccessToast("swap-vertical", `Connected to CARTA server${userString}`));
-                    }
+                    // if (this.backendService.connectionDropped) {
+                    //     AppToaster.show(WarningToast(`Reconnected to server${userString}. Some errors may occur`));
+                    // } else {
+                    //     AppToaster.show(SuccessToast("swap-vertical", `Connected to CARTA server${userString}`));
+                    // }
                     break;
                 case ConnectionStatus.CLOSED:
                     if (this.previousConnectionStatus === ConnectionStatus.ACTIVE || this.previousConnectionStatus === ConnectionStatus.PENDING) {

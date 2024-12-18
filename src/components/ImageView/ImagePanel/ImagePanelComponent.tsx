@@ -200,7 +200,7 @@ export class ImagePanelComponent extends React.Component<ImagePanelComponentProp
                     {!(appStore.animatorStore.animationActive && appStore.animatorStore.animationMode === AnimationMode.FRAME) && (
                         <ToolbarComponent
                             docked={this.props.docked}
-                            visible={this.imageToolbarVisible}
+                            visible
                             frame={this.frame}
                             activeLayer={activeLayer}
                             onActiveLayerChange={appStore.updateActiveLayer}

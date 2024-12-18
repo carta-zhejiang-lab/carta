@@ -184,6 +184,7 @@ export class OverlayTitleSettings {
         makeObservable(this);
         this.visible = false;
         this.hidden = false;
+        this.hidden = true;
         this.customColor = false;
         this.color = AST_DEFAULT_COLOR;
         this.font = 2;
