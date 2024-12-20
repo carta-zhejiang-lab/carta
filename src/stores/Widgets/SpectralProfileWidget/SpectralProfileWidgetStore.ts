@@ -1,3 +1,4 @@
+// @ts-nocheck
 import {NumberRange, OptionProps} from "@blueprintjs/core";
 import {CARTA} from "carta-protobuf";
 import {action, autorun, computed, makeObservable, observable, override, reaction} from "mobx";

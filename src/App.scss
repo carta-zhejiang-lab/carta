@@ -18,6 +18,8 @@ body {
     top: 0;
     left: 0;
     z-index: -100;
+    display: flex;
+
     user-select: none;
     .#{$ns}-dark {
         background-color: $dark-gray3;
@@ -25,11 +27,12 @@ body {
 }
 
 .gl-container-app {
-    position: absolute;
-    top: 48px;
-    bottom: 5px;
-    left: 5px;
-    right: 5px;
+    // position: absolute;
+    // top: 48px;
+    // bottom: 5px;
+    // left: 5px;
+    // right: 5px;
+    flex: 1;
     z-index: -100;
 }
 
@@ -68,4 +71,13 @@ body {
     div.plotly-notifier {
         visibility: hidden;
     }
+}
+.lm_column {
+    width: 100% !important;
+}
+.lm_stack {
+    width: 100% !important;
+}
+.lm_header {
+    display: none;
 }

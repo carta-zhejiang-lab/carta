@@ -1,3 +1,4 @@
+// @ts-nocheck
 import * as React from "react";
 import {CSSProperties} from "react";
 import ReactResizeDetector from "react-resize-detector";

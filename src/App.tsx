@@ -17,6 +17,7 @@ import {HotkeyTargetContainer} from "./HotkeyWrapper";
 import "./App.scss";
 import "./layout-base.scss";
 import "./layout-theme.scss";
+import FileInfoPanel from "components/FileInfoPanel";
 
 @observer
 export class App extends React.Component {
@@ -88,6 +89,7 @@ export class App extends React.Component {
         return (
             <div className={className}>
                 <UIControllerComponent />
+                <FileInfoPanel />
                 {alertComponent}
                 <TaskProgressDialogComponent
                     progress={undefined}

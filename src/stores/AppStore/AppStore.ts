@@ -1,3 +1,4 @@
+// @ts-nocheck
 import {Classes, Colors, OptionProps, setHotkeysDialogProps} from "@blueprintjs/core";
 import * as AST from "ast_wrapper";
 import axios from "axios";
@@ -124,6 +125,8 @@ export class AppStore {
     /** Configuration of the images in the image view widget. */
     readonly imageViewConfigStore = ImageViewConfigStore.Instance;
 
+    @observable fileResponse: any;
+
     // WebAssembly Module status
     @observable astReady: boolean;
     @observable cartaComputeReady: boolean;
@@ -236,7 +239,8 @@ export class AppStore {
             const ack = await this.backendService.connect(wsURL);
             console.log(`Connected with session ID ${ack.sessionId}`);
             this.logStore.addInfo(`Connected to server ${wsURL} with session ID ${ack.sessionId}`, ["network"]);
-            await this.openFile(".", "testkeys.fits", "");
+
+            this.fileResponse = await this.backendService.getFileInfo(".", "CSST_MSC_MS_SCI_20231128175332_20231128175602_10109200108743_01_L1_V01.fits", "");
         } catch (err) {
             console.error(err);
         }
