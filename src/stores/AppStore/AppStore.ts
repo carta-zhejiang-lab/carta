@@ -160,6 +160,8 @@ export class AppStore {
     @observable isExportingImage = false;
     @observable private isCanvasUpdated: boolean;
 
+    @observable showSpatialProfilerDialog = false;
+
     // dynamic zIndex
     public zIndexManager = new FloatingObjzIndexManager();
 
@@ -241,6 +243,8 @@ export class AppStore {
             this.logStore.addInfo(`Connected to server ${wsURL} with session ID ${ack.sessionId}`, ["network"]);
 
             this.fileResponse = await this.backendService.getFileInfo(".", "CSST_MSC_MS_SCI_20231128175332_20231128175602_10109200108743_01_L1_V01.fits", "");
+
+            // this.fileResponse = await this.backendService.getFileInfo(".", "testkeys.fits", "");
         } catch (err) {
             console.error(err);
         }
@@ -1355,7 +1359,7 @@ export class AppStore {
                 this.deleteRegion(x);
             }
         });
-        AppToaster.show(SuccessToast("console", `Regions deleted successfully.`, 3000));
+        // AppToaster.show(SuccessToast("console", `Regions deleted successfully.`, 3000));
     };
 
     /**

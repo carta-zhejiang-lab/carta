@@ -19,16 +19,16 @@ const COMPONENT_CONFIG = new Map<string, any>([
             id: "image-view",
             isClosable: false
         }
-    ],
-    [
-        "render-config",
-        {
-            type: "react-component",
-            component: "render-config",
-            title: "Render Configuration",
-            id: "render-config"
-        }
     ]
+    // [
+    //     "render-config",
+    //     {
+    //         type: "react-component",
+    //         component: "render-config",
+    //         title: "Render Configuration",
+    //         id: "render-config"
+    //     }
+    // ],
     // [
     //     "region-list",
     //     {
@@ -54,7 +54,7 @@ const COMPONENT_CONFIG = new Map<string, any>([
     //         component: "spatial-profiler",
     //         id: "spatial-profiler"
     //     }
-    // ],
+    // ]
     // [
     //     "spectral-profiler",
     //     {
@@ -63,7 +63,7 @@ const COMPONENT_CONFIG = new Map<string, any>([
     //         id: "spectral-profiler",
     //         title: "Z Profile: Cursor"
     //     }
-    // ],
+    // ]
     // [
     //     "stokes",
     //     {

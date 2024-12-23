@@ -715,15 +715,15 @@ export class SpatialProfilerComponent extends React.Component<WidgetProps> {
         return (
             <div className={"spatial-profiler-widget"}>
                 <div className="profile-container">
-                    <div className="profile-toolbar">
+                    {/* <div className="profile-toolbar">
                         <RegionSelectorComponent widgetStore={widgetStore} />
                         {widgetStore.effectiveFrame?.hasStokes && (
                             <FormGroup label={"Polarization"} inline={true}>
                                 <HTMLSelect value={widgetStore.selectedStokes} options={widgetStore.stokesOptions} onChange={ev => widgetStore.setSelectedStokes(ev.currentTarget.value)} />
                             </FormGroup>
                         )}
-                    </div>
-                    <div className="profile-plot">
+                    </div> */}
+                    <div className="profile-plot" style={{width: 600, height: 300}}>
                         <LinePlotComponent {...linePlotProps} />
                     </div>
                     <div className="profile-info" data-testid={(isXProfile ? "x" : "y") + "-profiler-info"}>

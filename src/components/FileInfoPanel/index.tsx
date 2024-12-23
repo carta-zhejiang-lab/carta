@@ -11,19 +11,19 @@ export default class FileInfoPanel extends React.Component {
         super(props);
         this.state = {
             selectedTab: "file",
-            selectedHdu: "0"
+            selectedHdu: ""
         };
     }
 
     onLoadFile = async () => {
         const store = AppStore.Instance;
         await store.openFile(".", "CSST_MSC_MS_SCI_20231128175332_20231128175602_10109200108743_01_L1_V01.fits", this.state.selectedHdu ? this.state.selectedHdu : "");
+
+        // await store.openFile(".", "testkeys.fits", this.state.selectedHdu ? this.state.selectedHdu : "");
     };
 
     render() {
         const store = AppStore.Instance;
-
-        const data = store.activeFrame?.frameInfo?.fileInfoExtended;
         const options =
             Object.keys(store.fileResponse?.fileInfoExtended || {}).length > 1
                 ? Object.keys(store.fileResponse?.fileInfoExtended || {})
@@ -38,6 +38,8 @@ export default class FileInfoPanel extends React.Component {
                       })
                       .filter(Boolean)
                 : null;
+
+        const data = Object.keys(store.fileResponse?.fileInfoExtended || {}).length > 1 ? store.fileResponse?.fileInfoExtended[this.state.selectedHdu || "1"] : store.fileResponse?.fileInfoExtended[this.state.selectedHdu || "0"];
         return (
             <div className="file-info-panel">
                 <div className="file-info-panel-title">
@@ -70,7 +72,7 @@ export default class FileInfoPanel extends React.Component {
                     </div>
                     {options && (
                         <div className="file-info-panel-right">
-                            HDU:{" "}
+                            HDU:&nbsp;&nbsp;
                             <select
                                 value={this.state.selectedHdu}
                                 onChange={e => {
@@ -81,7 +83,9 @@ export default class FileInfoPanel extends React.Component {
                                 }}
                             >
                                 {options.map((i, index) => (
-                                    <option value={i.hdu}>{i.name}</option>
+                                    <option value={i.hdu}>
+                                        {i.hdu}:{i.name}
+                                    </option>
                                 ))}
                             </select>
                         </div>
