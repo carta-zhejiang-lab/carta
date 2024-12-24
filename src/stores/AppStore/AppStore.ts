@@ -242,8 +242,22 @@ export class AppStore {
             console.log(`Connected with session ID ${ack.sessionId}`);
             this.logStore.addInfo(`Connected to server ${wsURL} with session ID ${ack.sessionId}`, ["network"]);
 
+            const query = {};
+            const queryArray = window.location.search.slice(1).split("&");
+            console.log("query", queryArray);
+            if (queryArray.length > 0) {
+                queryArray.forEach(i => {
+                    const arr = i.split("=");
+                    if (arr.length > 1) {
+                        const key = arr[0];
+                        const value = arr[1];
+                        query[key] = decodeURIComponent(value);
+                    }
+                });
+            }
+            //@TODO save url params in appStore
+            //@TODO load file from url params
             this.fileResponse = await this.backendService.getFileInfo(".", "CSST_MSC_MS_SCI_20231128175332_20231128175602_10109200108743_01_L1_V01.fits", "");
-
             // this.fileResponse = await this.backendService.getFileInfo(".", "testkeys.fits", "");
         } catch (err) {
             console.error(err);
