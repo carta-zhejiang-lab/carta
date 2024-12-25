@@ -17,11 +17,7 @@ export default class FileInfoPanel extends React.Component {
 
     onLoadFile = async () => {
         const store = AppStore.Instance;
-        await store.openFile(
-            store.fileParams.fileParams.fileDirectory || ".",
-            store.fileParams.fileName || "CSST_MSC_MS_SCI_20231128175332_20231128175602_10109200108743_01_L1_V01.fits",
-            this.state.selectedHdu ? this.state.selectedHdu : ""
-        );
+        await store.openFile(store.fileParams.fileDirectory || ".", store.fileParams.fileName || "CSST_MSC_MS_SCI_20231128175332_20231128175602_10109200108743_01_L1_V01.fits", this.state.selectedHdu ? this.state.selectedHdu : "");
 
         // await store.openFile(".", "testkeys.fits", this.state.selectedHdu ? this.state.selectedHdu : "");
     };
