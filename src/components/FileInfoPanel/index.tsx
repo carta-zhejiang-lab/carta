@@ -41,7 +41,7 @@ export default class FileInfoPanel extends React.Component {
 
         const data = Object.keys(store.fileResponse?.fileInfoExtended || {}).length > 1 ? store.fileResponse?.fileInfoExtended[this.state.selectedHdu || "1"] : store.fileResponse?.fileInfoExtended[this.state.selectedHdu || "0"];
         return (
-            <div className="file-info-panel">
+            <div className={`file-info-panel ${store.fileParams && +store.fileParams.level === 2 ? "file-info-panel-full" : ""}`}>
                 <div className="file-info-panel-title">
                     <div className="file-info-panel-left">
                         <div
@@ -114,11 +114,13 @@ export default class FileInfoPanel extends React.Component {
                             );
                         })}
                 </div>
-                <div className="file-info-panel-bottom">
-                    <div className="file-info-button" onClick={this.onLoadFile}>
-                        加载
+                {store.fileParams && +store.fileParams.level !== 2 && (
+                    <div className="file-info-panel-bottom">
+                        <div className="file-info-button" onClick={this.onLoadFile}>
+                            加载
+                        </div>
                     </div>
-                </div>
+                )}
             </div>
         );
     }

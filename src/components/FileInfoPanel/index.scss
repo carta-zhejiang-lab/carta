@@ -1,6 +1,12 @@
 .file-info-panel {
     width: 404px;
     padding: 10px;
+    &-full {
+        width: 100%;
+        .file-info-panel-title {
+            max-width: 404px;
+        }
+    }
 
     &-content {
         border: 1px solid rgba(187, 187, 187, 1);

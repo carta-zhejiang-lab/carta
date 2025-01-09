@@ -85,7 +85,8 @@ export class App extends React.Component {
 
         return (
             <div className={className}>
-                <UIControllerComponent />
+                {appStore.fileParams && +appStore.fileParams.level !== 2 && <UIControllerComponent />}
+
                 <FileInfoPanel />
                 {alertComponent}
                 <TaskProgressDialogComponent
