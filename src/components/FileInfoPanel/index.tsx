@@ -68,7 +68,6 @@ export default class FileInfoPanel extends React.Component {
                         >
                             Header信息
                         </div>
-                        <div className="file-info-panel-border" />
                     </div>
                     {options && (
                         <div className="file-info-panel-right">

@@ -42,9 +42,11 @@ $custom-pane-controls-color-dark: white;
 
 // Single Pane content (area in which final dragged content is contained)
 .lm_content {
-    background: $pane-background;
-    border: 1px solid $border-color;
-    border-radius: 0 $tab-border-radius $tab-border-radius $tab-border-radius;
+    background: rgba(0, 0, 0, 0.02);
+
+    // background: $pane-background;
+    // border: 1px solid $border-color;
+    // border-radius: 0 $tab-border-radius $tab-border-radius $tab-border-radius;
 }
 
 // Single Pane content during Drag (style of moving window following mouse)

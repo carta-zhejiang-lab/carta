@@ -22,7 +22,8 @@ export declare type CustomIconName =
     | "polyline"
     | "imageFitting"
     | "lineFitting"
-    | "vectorOverlay";
+    | "vectorOverlay"
+    | any;
 
 export class CustomIcon extends React.Component<{icon: CustomIconName; size?: number}> {
     static readonly SIZE_STANDARD = 16;

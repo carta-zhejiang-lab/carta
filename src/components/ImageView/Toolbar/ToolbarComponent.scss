@@ -1,6 +1,9 @@
 @import "~@blueprintjs/core/lib/scss/variables.scss";
 
 .image-toolbar {
+    padding: 4px;
+    box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.2);
+    background: #fff !important;
     pointer-events: none;
 
     span {
@@ -81,5 +84,44 @@
     }
 }
 .scaling-radio-group {
-    padding: 10px;
+    padding: 8px;
+    .bp5-radio {
+        padding-top: 4px;
+        padding-bottom: 4px;
+        margin-bottom: 4px !important;
+
+        padding-left: 34px;
+        padding-right: 8px;
+
+        &:last-child {
+            margin-bottom: 0 !important;
+        }
+    }
+    .bp5-control input:checked ~ .bp5-control-indicator {
+        background-color: rgba(0, 152, 255, 1) !important;
+        &:hover {
+            background-color: rgba(0, 152, 255, 1) !important ;
+        }
+    }
+}
+.toolbar-icon {
+    &:hover {
+        svg {
+            cursor: pointer;
+            fill: rgba(230, 249, 255, 1) !important;
+            path {
+                fill: rgba(0, 152, 255, 1);
+                stroke: rgba(0, 152, 255, 1);
+            }
+        }
+    }
+    margin-bottom: 4px;
+    img {
+        cursor: pointer;
+        width: 26px;
+        height: 26px;
+    }
+    &:last-child {
+        margin-bottom: 0;
+    }
 }
