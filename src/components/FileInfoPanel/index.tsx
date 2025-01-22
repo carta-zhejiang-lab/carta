@@ -17,9 +17,10 @@ export default class FileInfoPanel extends React.Component {
 
     onLoadFile = async () => {
         const store = AppStore.Instance;
-        await store.openFile(store.fileParams.fileDirectory || ".", store.fileParams.fileName || "CSST_MSC_MS_SCI_20231128175332_20231128175602_10109200108743_01_L1_V01.fits", this.state.selectedHdu ? this.state.selectedHdu : "");
 
-        // await store.openFile(".", "testkeys.fits", this.state.selectedHdu ? this.state.selectedHdu : "");
+        await store.openFile(store.fileParams.fileDirectory, store.fileParams.level, this.state.selectedHdu ? this.state.selectedHdu : "");
+
+        // await store.openFile(".", "CSST_MSC_MS_SCI_20230425170015_20230425170245_10109200074165_23_L0_V01.fits", this.state.selectedHdu ? this.state.selectedHdu : "");
     };
 
     render() {
@@ -39,7 +40,7 @@ export default class FileInfoPanel extends React.Component {
                       .filter(Boolean)
                 : null;
 
-        const data = Object.keys(store.fileResponse?.fileInfoExtended || {}).length > 1 ? store.fileResponse?.fileInfoExtended[this.state.selectedHdu || "1"] : store.fileResponse?.fileInfoExtended[this.state.selectedHdu || "0"];
+        const data = Object.keys(store.fileResponse?.fileInfoExtended || {}).length > 0 ? store.fileResponse?.fileInfoExtended[this.state.selectedHdu || Object.keys(store.fileResponse?.fileInfoExtended)[0]] : {};
         return (
             <div className={`file-info-panel ${store.fileParams && +store.fileParams.level === 2 ? "file-info-panel-full" : ""}`}>
                 <div className="file-info-panel-title">
@@ -92,7 +93,7 @@ export default class FileInfoPanel extends React.Component {
                 </div>
                 <div className="file-info-panel-content">
                     {this.state.selectedTab === "file" &&
-                        data?.computedEntries.map(i => {
+                        data?.computedEntries?.map(i => {
                             return (
                                 <div className="file-info-item">
                                     <div className="file-info-item-label">{i.name}</div>
@@ -103,7 +104,7 @@ export default class FileInfoPanel extends React.Component {
                         })}
 
                     {this.state.selectedTab === "header" &&
-                        data?.headerEntries.map(i => {
+                        data?.headerEntries?.map(i => {
                             return (
                                 <div className="file-info-item">
                                     <div className="file-info-item-label">{i.name}</div>

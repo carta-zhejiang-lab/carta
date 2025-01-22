@@ -1041,18 +1041,16 @@ export class BackendService {
 
     private logEvent(eventType: CARTA.EventType, eventId: number, message: any, incoming: boolean = true) {
         const eventName = CARTA.EventType[eventType];
-        if (this.loggingEnabled && PreferenceStore.Instance.isEventLoggingEnabled(eventType)) {
-            if (incoming) {
-                if (eventId === 0) {
-                    console.log(`<== ${eventName} [Stream]`);
-                } else {
-                    console.log(`<== ${eventName} [${eventId}]`);
-                }
+        if (incoming) {
+            if (eventId === 0) {
+                console.log(`<== ${eventName} [Stream]`);
             } else {
-                console.log(`${eventName} [${eventId}] ==>`);
+                console.log(`<== ${eventName} [${eventId}]`);
             }
-            console.log(message);
-            console.log("\n");
+        } else {
+            console.log(`${eventName} [${eventId}] ==>`);
         }
+        console.log(message);
+        console.log("\n");
     }
 }

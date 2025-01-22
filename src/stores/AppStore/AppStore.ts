@@ -257,8 +257,8 @@ export class AppStore {
                 });
             }
             this.fileParams = query;
-            this.fileResponse = await this.backendService.getFileInfo(this.fileParams.fileDirectory || ".", this.fileParams.fileName || "CSST_MSC_MS_SCI_20231128175332_20231128175602_10109200108743_01_L1_V01.fits", "");
-            // this.fileResponse = await this.backendService.getFileInfo(".", "testkeys.fits", "");
+            this.fileResponse = await this.backendService.getFileInfo(this.fileParams.fileDirectory, this.fileParams.level, "");
+            // this.fileResponse = await this.backendService.getFileInfo(".", "CSST_MSC_MS_SCI_20230425170015_20230425170245_10109200074165_23_L0_V01.fits", "");
         } catch (err) {
             console.error(err);
         }
