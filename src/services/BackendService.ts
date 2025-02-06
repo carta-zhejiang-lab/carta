@@ -69,6 +69,7 @@ export class BackendService {
     public sessionId: number;
     public serverFeatureFlags: number;
     public serverUrl: string;
+    public logging: boolean = false;
 
     private connection: WebSocket;
     private lastPingTime: number;
@@ -1040,6 +1041,7 @@ export class BackendService {
     }
 
     private logEvent(eventType: CARTA.EventType, eventId: number, message: any, incoming: boolean = true) {
+        if (!this.logging) return;
         const eventName = CARTA.EventType[eventType];
         if (incoming) {
             if (eventId === 0) {

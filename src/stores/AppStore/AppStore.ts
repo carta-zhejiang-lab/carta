@@ -239,13 +239,8 @@ export class AppStore {
         try {
             await AST.onReady;
             this.setAstReady(true);
-            const ack = await this.backendService.connect(wsURL);
-            console.log(`Connected with session ID ${ack.sessionId}`);
-            this.logStore.addInfo(`Connected to server ${wsURL} with session ID ${ack.sessionId}`, ["network"]);
-
             const query = {};
             const queryArray = window.location.search.slice(1).split("&");
-            console.log("query", queryArray);
             if (queryArray.length > 0) {
                 queryArray.forEach(i => {
                     const arr = i.split("=");
@@ -256,6 +251,11 @@ export class AppStore {
                     }
                 });
             }
+            this.backendService.logging = !!query.logging;
+            const ack = await this.backendService.connect(wsURL);
+            console.log(`Connected with session ID ${ack.sessionId}`);
+            this.logStore.addInfo(`Connected to server ${wsURL} with session ID ${ack.sessionId}`, ["network"]);
+
             this.fileParams = query;
             this.fileResponse = await this.backendService.getFileInfo(this.fileParams.fileDirectory, this.fileParams.level, "");
             // this.fileResponse = await this.backendService.getFileInfo(".", "CSST_MSC_MS_SCI_20230425170015_20230425170245_10109200074165_23_L0_V01.fits", "");
