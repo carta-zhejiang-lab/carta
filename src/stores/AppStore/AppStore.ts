@@ -255,9 +255,12 @@ export class AppStore {
             const ack = await this.backendService.connect(wsURL);
             console.log(`Connected with session ID ${ack.sessionId}`);
             this.logStore.addInfo(`Connected to server ${wsURL} with session ID ${ack.sessionId}`, ["network"]);
-
+            if (query.isPersonalData) {
+                if (query.isPersonalData === "true") query.isPersonalData = true;
+                if (query.isPersonalData === "false") query.isPersonalData = false;
+            }
             this.fileParams = query;
-            this.fileResponse = await this.backendService.getFileInfo(this.fileParams.fileDirectory, this.fileParams.level, "");
+            this.fileResponse = await this.backendService.getFileInfo("", "", "", this.fileParams.isPersonalData, this.fileParams.id, this.fileParams.level);
             // this.fileResponse = await this.backendService.getFileInfo(".", "CSST_MSC_MS_SCI_20230425170015_20230425170245_10109200074165_23_L0_V01.fits", "");
         } catch (err) {
             console.error(err);
@@ -678,7 +681,7 @@ export class AppStore {
      * @throws If there is an error loading the file.
      */
     @flow.bound
-    *loadFile(path: string, filename: string, hdu: string, imageArithmetic: boolean, setAsActive: boolean = true, updateStartingDirectory: boolean = true) {
+    *loadFile(path: string, filename: string, hdu: string, imageArithmetic: boolean, setAsActive: boolean = true, updateStartingDirectory: boolean = true, isPersonalData?: boolean, id?: string, level?: string) {
         this.startFileLoading();
 
         if (imageArithmetic) {
@@ -701,7 +704,7 @@ export class AppStore {
         }
 
         try {
-            const ack = yield this.backendService.loadFile(path, filename, hdu, this.fileCounter, imageArithmetic);
+            const ack = yield this.backendService.loadFile(path, filename, hdu, this.fileCounter, imageArithmetic, isPersonalData, id, level);
             this.fileCounter++;
             if (!this.addFrame(ack, path, imageArithmetic, hdu, false, setAsActive, updateStartingDirectory)) {
                 AppToaster.show({icon: "warning-sign", message: "Load file failed.", intent: "danger", timeout: 3000});
@@ -822,10 +825,10 @@ export class AppStore {
      * const openedFile = await openFile("/path/to/directory", "example.fits");
      */
     @flow.bound
-    *openFile(path: string, filename?: string, hdu?: string, imageArithmetic?: boolean, updateStartingDirectory: boolean = true) {
+    *openFile(path: string, filename?: string, hdu?: string, imageArithmetic?: boolean, updateStartingDirectory: boolean = true, isPersonalData?: boolean, id?: string, level?: string) {
         this.removeAllFrames();
         this.overlayStore.global.setSystem(SystemType.Auto);
-        return yield this.loadFile(path, filename, hdu, imageArithmetic, true, updateStartingDirectory);
+        return yield this.loadFile(path, filename, hdu, imageArithmetic, true, updateStartingDirectory, isPersonalData, id, level);
     }
 
     @flow.bound
