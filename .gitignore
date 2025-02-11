@@ -7,6 +7,7 @@
 /coverage
 
 # production
+# 暂时是本地编译后让直接部署，所以需要监控build文件夹
 # /build
 
 # misc
