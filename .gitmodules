@@ -2,3 +2,7 @@
 	path = protobuf
 	url = git@github.com:carta-zhejiang-lab/carta-protobuf.git
 	branch = main
+[submodule "carta-protobuf"]
+	path = carta-protobuf
+	url = git@github.com:carta-zhejiang-lab/carta-protobuf.git
+	branch = main
