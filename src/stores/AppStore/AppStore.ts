@@ -1948,11 +1948,11 @@ export class AppStore {
             switch (newConnectionStatus) {
                 case ConnectionStatus.ACTIVE:
                     AppToaster.clear();
-                    if (this.backendService.connectionDropped) {
-                        AppToaster.show(WarningToast(`Reconnected to server${userString}. Some errors may occur`));
-                    } else {
-                        AppToaster.show(SuccessToast("swap-vertical", `Connected to CARTA server${userString}`));
-                    }
+                    // if (this.backendService.connectionDropped) {
+                    //     AppToaster.show(WarningToast(`Reconnected to server${userString}. Some errors may occur`));
+                    // } else {
+                    //     AppToaster.show(SuccessToast("swap-vertical", `Connected to CARTA server${userString}`));
+                    // }
                     break;
                 case ConnectionStatus.CLOSED:
                     if (this.previousConnectionStatus === ConnectionStatus.ACTIVE || this.previousConnectionStatus === ConnectionStatus.PENDING) {
