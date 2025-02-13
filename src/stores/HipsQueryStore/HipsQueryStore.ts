@@ -122,7 +122,7 @@ export class HipsQueryStore {
 
     constructor() {
         makeObservable(this);
-        this.fetchSurveyList();
+        // this.fetchSurveyList();
     }
 
     /**

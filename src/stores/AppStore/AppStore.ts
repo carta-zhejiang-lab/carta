@@ -1833,9 +1833,9 @@ export class AppStore {
                 this.setCursorFrozen(this.preferenceStore.isCursorFrozen);
                 this.updateASTColors();
                 this.setSpectralMatchingType(this.preferenceStore.spectralMatchingType);
-                if (this.preferenceStore.checkNewRelease) {
-                    await this.checkNewRelease();
-                }
+                // if (this.preferenceStore.checkNewRelease) {
+                //     await this.checkNewRelease();
+                // }
             } catch (err) {
                 console.error(err);
             }
