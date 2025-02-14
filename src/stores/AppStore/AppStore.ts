@@ -1817,11 +1817,11 @@ export class AppStore {
         if (isAstReady && isZfpReady && isCartaComputeReady && isApiServiceAuthenticated) {
             try {
                 await this.preferenceStore.fetchPreferences();
-                this.telemetryService.checkAndGenerateId(true);
+                // this.telemetryService.checkAndGenerateId(true);
                 await this.connectToServer();
                 await this.fileBrowserStore.restoreStartingDirectory();
-                await this.layoutStore.fetchLayouts();
-                await this.snippetStore.fetchSnippets();
+                // await this.layoutStore.fetchLayouts();
+                // await this.snippetStore.fetchSnippets();
 
                 this.tileService.setCache(this.preferenceStore.gpuTileCache, this.preferenceStore.systemTileCache);
                 if (!this.layoutStore.applyLayout(this.preferenceStore.layout)) {

@@ -46,7 +46,7 @@ export class UIControllerComponent extends React.Component {
                 <ExternalPageDialogComponent />
                 <HelpDrawerComponent />
                 <StokesDialogComponent />
-                <TelemetryDialogComponent />
+                {/* <TelemetryDialogComponent /> */}
                 {/* <SplashScreenComponent /> */}
                 <FittingDialogComponent />
             </React.Fragment>
