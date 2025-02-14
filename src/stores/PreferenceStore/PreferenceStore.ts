@@ -985,14 +985,14 @@ export class PreferenceStore {
     @flow.bound *fetchPreferences() {
         yield this.upgradePreferences();
 
-        const preferences = yield ApiService.Instance.getPreferences();
-        if (preferences) {
-            const keys = Object.keys(preferences);
-            for (const key of keys) {
-                const val = preferences[key];
-                this.preferences.set(key as PreferenceKeys, val);
-            }
-        }
+        // const preferences = yield ApiService.Instance.getPreferences();
+        // if (preferences) {
+        //     const keys = Object.keys(preferences);
+        //     for (const key of keys) {
+        //         const val = preferences[key];
+        //         this.preferences.set(key as PreferenceKeys, val);
+        //     }
+        // }
         this.preferenceReady = true;
     }
 

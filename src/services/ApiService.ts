@@ -246,57 +246,59 @@ export class ApiService {
     };
 
     public setPreferences = async (preferences: any) => {
-        if (ApiService.RuntimeConfig.apiAddress) {
-            try {
-                const url = `${ApiService.RuntimeConfig.apiAddress}/database/preferences`;
-                const response = await this.axiosInstance.put(url, preferences);
-                return response?.data?.success;
-            } catch (err) {
-                console.log(err);
-                return false;
-            }
-        } else {
-            try {
-                const obj = JSON.parse(localStorage.getItem("preferences") ?? "{}");
-                for (const key of Object.keys(preferences)) {
-                    obj[key] = preferences[key];
-                }
+        // if (ApiService.RuntimeConfig.apiAddress) {
+        //     try {
+        //         const url = `${ApiService.RuntimeConfig.apiAddress}/database/preferences`;
+        //         const response = await this.axiosInstance.put(url, preferences);
+        //         return response?.data?.success;
+        //     } catch (err) {
+        //         console.log(err);
+        //         return false;
+        //     }
+        // } else {
+        //     try {
+        //         const obj = JSON.parse(localStorage.getItem("preferences") ?? "{}");
+        //         for (const key of Object.keys(preferences)) {
+        //             obj[key] = preferences[key];
+        //         }
 
-                const valid = ApiService.PreferenceValidator(obj);
-                if (!valid) {
-                    console.log(ApiService.PreferenceValidator.errors);
-                }
+        //         const valid = ApiService.PreferenceValidator(obj);
+        //         if (!valid) {
+        //             console.log(ApiService.PreferenceValidator.errors);
+        //         }
 
-                localStorage.setItem("preferences", JSON.stringify(obj));
-                return true;
-            } catch (err) {
-                return false;
-            }
-        }
+        //         localStorage.setItem("preferences", JSON.stringify(obj));
+        //         return true;
+        //     } catch (err) {
+        //         return false;
+        //     }
+        // }
+        return true;
     };
 
     public clearPreferences = async (keys: string[]) => {
-        if (ApiService.RuntimeConfig.apiAddress) {
-            try {
-                const url = `${ApiService.RuntimeConfig.apiAddress}/database/preferences`;
-                const response = await this.axiosInstance.delete(url, {data: {keys}});
-                return response?.data?.success;
-            } catch (err) {
-                console.log(err);
-                return false;
-            }
-        } else {
-            try {
-                const obj = JSON.parse(localStorage.getItem("preferences") ?? "{}");
-                for (const key of keys) {
-                    delete obj[key];
-                }
-                localStorage.setItem("preferences", JSON.stringify(obj));
-                return true;
-            } catch (err) {
-                return false;
-            }
-        }
+        // if (ApiService.RuntimeConfig.apiAddress) {
+        //     try {
+        //         const url = `${ApiService.RuntimeConfig.apiAddress}/database/preferences`;
+        //         const response = await this.axiosInstance.delete(url, {data: {keys}});
+        //         return response?.data?.success;
+        //     } catch (err) {
+        //         console.log(err);
+        //         return false;
+        //     }
+        // } else {
+        //     try {
+        //         const obj = JSON.parse(localStorage.getItem("preferences") ?? "{}");
+        //         for (const key of keys) {
+        //             delete obj[key];
+        //         }
+        //         localStorage.setItem("preferences", JSON.stringify(obj));
+        //         return true;
+        //     } catch (err) {
+        //         return false;
+        //     }
+        // }
+        return true;
     };
 
     public getLayouts = async () => {
