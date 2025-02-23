@@ -41,6 +41,7 @@ export default class FileInfoPanel extends React.Component {
                 : null;
 
         const data = Object.keys(store.fileResponse?.fileInfoExtended || {}).length > 0 ? store.fileResponse?.fileInfoExtended[this.state.selectedHdu || Object.keys(store.fileResponse?.fileInfoExtended)[0]] : {};
+        const disabled = data ? Object.keys(data).length === 0 : true;
         return (
             <div className={`file-info-panel ${store.fileParams && +store.fileParams.level === 2 ? "file-info-panel-full" : ""}`}>
                 <div className="file-info-panel-title">
@@ -116,7 +117,7 @@ export default class FileInfoPanel extends React.Component {
                 </div>
                 {store.fileParams && +store.fileParams.level !== 2 && (
                     <div className="file-info-panel-bottom">
-                        <div className="file-info-button" onClick={this.onLoadFile}>
+                        <div className={`file-info-button ${disabled ? "file-info-button-disabled" : ""}`} onClick={this.onLoadFile}>
                             加载
                         </div>
                     </div>

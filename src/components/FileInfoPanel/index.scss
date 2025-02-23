@@ -60,6 +60,11 @@
     text-align: center;
     cursor: pointer;
     margin-bottom: 16px;
+    &-disabled {
+        cursor: not-allowed;
+        background-color: grey;
+        pointer-events: none;
+    }
 }
 .file-info-panel-title {
     display: flex;
